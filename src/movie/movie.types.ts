@@ -8,9 +8,18 @@ export type Movie = {
   vote_average: number;
 };
 
-export type MoviesQuery = {
+export type SearchMoviesQuery = {
   page: number;
   query: string;
+};
+
+export type PopularMoviesQuery = {
+  page: number;
+};
+
+export type DiscoverMoviesQuery = {
+  page: number;
+  with_genres?: Genre['id'];
 };
 
 export type ListingResponse<T, RK extends string = 'results'> = {
