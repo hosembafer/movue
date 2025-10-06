@@ -6,6 +6,9 @@ export type Movie = {
   overview: string;
   release_date: string;
   vote_average: number;
+  genres: Genre[];
+  adult: boolean;
+  imdb_id: string;
 };
 
 export type SearchMoviesQuery = {
@@ -29,4 +32,30 @@ export type ListingResponse<T, RK extends string = 'results'> = {
 export type Genre = {
   id: number;
   name: string;
+};
+
+export type CastMember = {
+  id: number;
+  name: string;
+  character: string;
+  order: number;
+  profile_path: string;
+};
+
+export type MovieCredits = {
+  cast: CastMember[];
+};
+
+export type MovieTagEntry = {
+  id: number | string;
+  name: string;
+  type?: 'critical';
+};
+
+export type MovieVideo = {
+  id: number;
+  name: string;
+  key: string;
+  site: 'Youtube' | string;
+  published_at: string;
 };

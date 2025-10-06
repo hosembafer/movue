@@ -1,10 +1,14 @@
 <template>
   <n-grid
     cols="3"
-    x-gap="16px"
-    y-gap="16px"
+    x-gap="30px"
+    y-gap="30px"
+    style="padding-top: 20px"
   >
-    <n-gi v-for="movie in movies">
+    <n-gi
+      v-for="movie in movies"
+      :key="movie.id"
+    >
       <MovieCard :movie="movie" />
     </n-gi>
   </n-grid>

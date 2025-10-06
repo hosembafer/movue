@@ -37,7 +37,7 @@ const triggerFiltersChanged = () => {
   emit('filters-changed');
 };
 
-const debouncedChange = debounce(triggerFiltersChanged, 500);
+const debouncedChange = debounce(triggerFiltersChanged, 700);
 
 const keyword = defineModel<string>('keyword', { default: '' });
 const genreId = defineModel<number>('genreId', { default: undefined });
