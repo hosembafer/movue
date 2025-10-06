@@ -15,6 +15,8 @@ mediaColorSchema.addEventListener('change', (event) => {
 
 <template>
   <n-config-provider :theme="theme === 'dark' ? darkTheme : null">
-    <RouterView />
+    <n-layout>
+      <RouterView />
+    </n-layout>
   </n-config-provider>
 </template>
