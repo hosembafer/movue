@@ -31,9 +31,10 @@ import { fetchDiscoverMovies, fetchGenres, searchMovies, fetchPopularMovies } fr
 import type { Movie } from '../movie.types';
 import { useMovieStore } from '../movie.store';
 import { storeToRefs } from 'pinia';
+import { moviesQueryCache } from '../movies.query-cache';
 
 const data = ref<Movie[]>([]);
-const page = ref(1);
+const page = ref(0);
 const keyword = ref('');
 const genreId = ref<number>();
 
@@ -59,7 +60,9 @@ const loadMore = () => {
   }
   isLoading.value = true;
   const nextPage = ++page.value;
-  const fetchFn = (() => {
+  const key = ['movies', keyword.value, genreId.value, nextPage];
+
+  const getData = () => {
     if (keyword.value) {
       return searchMovies({
         page: nextPage,
@@ -75,9 +78,9 @@ const loadMore = () => {
         page: nextPage,
       });
     }
-  })();
+  };
 
-  fetchFn.then(({ results }) => {
+  moviesQueryCache.process(key, 60_000, getData).then(({ results }) => {
     data.value = [...data.value, ...results];
     isLoading.value = false;
   });
