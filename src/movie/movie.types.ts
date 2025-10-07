@@ -27,6 +27,8 @@ export type DiscoverMoviesQuery = {
 
 export type ListingResponse<T, RK extends string = 'results'> = {
   [K in RK]: T[];
+} & {
+  total_pages: number;
 };
 
 export type Genre = {

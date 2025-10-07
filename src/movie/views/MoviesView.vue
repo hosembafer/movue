@@ -33,8 +33,11 @@ import { useMovieStore } from '../movie.store';
 import { storeToRefs } from 'pinia';
 import { moviesQueryCache } from '../movies.query-cache';
 
+const MOVIE_CACHE_TTL_MS = 60_000;
+
 const data = ref<Movie[]>([]);
 const page = ref(0);
+const hasMore = ref(true);
 const keyword = ref('');
 const genreId = ref<number>();
 
@@ -55,7 +58,7 @@ const onFiltersChanged = () => {
 };
 
 const loadMore = () => {
-  if (isLoading.value) {
+  if (isLoading.value || !hasMore.value) {
     return;
   }
   isLoading.value = true;
@@ -80,8 +83,9 @@ const loadMore = () => {
     }
   };
 
-  moviesQueryCache.process(key, 60_000, getData).then(({ results }) => {
+  moviesQueryCache.process(key, MOVIE_CACHE_TTL_MS, getData).then(({ results, total_pages }) => {
     data.value = [...data.value, ...results];
+    hasMore.value = total_pages > page.value;
     isLoading.value = false;
   });
 };
