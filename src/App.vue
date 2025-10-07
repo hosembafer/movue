@@ -1,13 +1,29 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import { darkTheme } from 'naive-ui';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import AppHeader from '@/shared/components/app-header.vue';
 
 type ThemeKey = 'dark' | 'light';
 const mediaColorSchema = window.matchMedia('(prefers-color-scheme: dark)');
 
 const theme = ref<ThemeKey>(mediaColorSchema.matches ? 'dark' : 'light');
+const themeColors: Record<ThemeKey, string> = {
+  dark: '#101014',
+  light: '#ffffff',
+};
+
+const updateThemeMetaColor = (nextTheme: ThemeKey) => {
+  const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  if (themeMeta) {
+    themeMeta.content = themeColors[nextTheme];
+  }
+  document.documentElement.classList.toggle('dark', nextTheme === 'dark');
+};
+
+updateThemeMetaColor(theme.value);
+
+watch(theme, updateThemeMetaColor);
 
 const toggleTheme = () => {
   theme.value = theme.value === 'dark' ? 'light' : 'dark';
