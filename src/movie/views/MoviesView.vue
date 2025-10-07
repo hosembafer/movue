@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import MovieFilters from '../components/movie-filters.vue';
 import MovieList from '../components/movie-list.vue';
 import { fetchDiscoverMovies, fetchGenres, searchMovies, fetchPopularMovies } from '../movie.requests';
@@ -41,10 +41,6 @@ const hasMore = ref(true);
 const keyword = ref('');
 const genreId = ref<number>();
 
-fetchPopularMovies({ page: 1 }).then(({ results }) => {
-  data.value = results;
-});
-
 const isLoading = ref(false);
 
 const onFiltersChanged = () => {
@@ -54,15 +50,16 @@ const onFiltersChanged = () => {
   });
   data.value = [];
   page.value = 0;
+  hasMore.value = true;
   loadMore();
 };
 
-const loadMore = () => {
+const loadMore = async () => {
   if (isLoading.value || !hasMore.value) {
     return;
   }
   isLoading.value = true;
-  const nextPage = ++page.value;
+  const nextPage = page.value + 1;
   const key = ['movies', keyword.value, genreId.value, nextPage];
 
   const getData = () => {
@@ -83,11 +80,14 @@ const loadMore = () => {
     }
   };
 
-  moviesQueryCache.process(key, MOVIE_CACHE_TTL_MS, getData).then(({ results, total_pages }) => {
+  try {
+    const { results, total_pages } = await moviesQueryCache.process(key, MOVIE_CACHE_TTL_MS, getData);
+    page.value = nextPage;
     data.value = [...data.value, ...results];
-    hasMore.value = total_pages > page.value;
+    hasMore.value = total_pages > nextPage;
+  } finally {
     isLoading.value = false;
-  });
+  }
 };
 
 const movieStore = useMovieStore();
@@ -96,5 +96,9 @@ const { setGenres } = movieStore;
 
 fetchGenres().then(({ genres }) => {
   setGenres(genres);
+});
+
+onMounted(() => {
+  loadMore();
 });
 </script>
