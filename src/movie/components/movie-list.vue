@@ -1,6 +1,7 @@
 <template>
   <n-grid
-    cols="3"
+    responsive="screen"
+    cols="l:4 s:2 xs:1"
     x-gap="30px"
     y-gap="30px"
     style="padding-top: 20px"
