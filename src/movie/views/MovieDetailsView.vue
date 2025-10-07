@@ -11,6 +11,7 @@
       <MovieRating :rating="movie.vote_average / 2" />
       <n-h1 style="text-align: center">{{ movie.title }} ({{ getYearFromDateString(movie.release_date) }})</n-h1>
       <MovieTags :movie="movie" />
+      <MovieFavoriteToggler :movie-id="movieId" />
 
       <div style="padding: 20px">
         <n-text>
@@ -56,6 +57,7 @@ import ActionButton from '@/shared/components/action-button.vue';
 import { getImdbMovieUrl } from '@/shared/utils/imdb';
 import { getYearFromDateString } from '@/shared/utils/formatting';
 import MovieTrailers from '../components/movie-trailers.vue';
+import MovieFavoriteToggler from '../components/movie-favorite-toggler.vue';
 
 const route = useRoute();
 const movieId = route.params.movieId as string;
