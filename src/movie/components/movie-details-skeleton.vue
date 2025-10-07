@@ -104,6 +104,7 @@
   width: 100%;
   max-width: 600px;
   align-self: center;
+  margin: 0 auto;
   padding: 0 16px 40px;
 }
 

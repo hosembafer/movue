@@ -6,7 +6,7 @@
       :fraction="starFraction(i)"
       :idSuffix="i"
     />
-    <span class="rating-number">{{ rating.toFixed(1) }}</span>
+    <span class="rating-number">{{ (rating * 2).toFixed(1) }}</span>
   </div>
 </template>
 
