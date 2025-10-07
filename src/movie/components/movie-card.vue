@@ -21,7 +21,9 @@
       </RouterLink>
     </template>
     <template #footer>
-      {{ movie.overview }}
+      <p class="overview">
+        {{ movie.overview }}
+      </p>
     </template>
     <MovieRating :rating="movie.vote_average / 2" />
     <template #header-extra> {{ getYearFromDateString(movie.release_date) }} </template>
@@ -54,5 +56,16 @@ const { movie } = defineProps<{
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   overflow: hidden;
+}
+
+.overview {
+  margin: 0;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  white-space: normal;
 }
 </style>
