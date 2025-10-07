@@ -5,14 +5,17 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'root',
       redirect: '/movies',
     },
     {
       path: '/movies',
+      name: 'movies-list',
       component: () => import('@/movie/views/MoviesView.vue'),
     },
     {
       path: '/movies/:movieId',
+      name: 'movie-details',
       component: () => import('@/movie/views/MovieDetailsView.vue'),
     },
   ],

@@ -4,7 +4,6 @@
       style="flex-direction: column; max-width: 600px; place-self: center"
       :align="`center`"
     >
-      <MovieHeader />
       <MovieCover
         :movie="movie"
         style="margin-bottom: 20px"
@@ -48,7 +47,7 @@
 import { ref } from 'vue';
 import MovieCover from '../components/movie-cover.vue';
 import type { Movie, MovieCredits, MovieVideo } from '../movie.types';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { fetchMovieCredits, fetchMovieDetails, fetchMovieVideos } from '../movie.requests';
 import MovieRating from '../components/movie-rating.vue';
 import MovieCast from '../components/movie-cast.vue';
@@ -57,10 +56,8 @@ import ActionButton from '@/shared/components/action-button.vue';
 import { getImdbMovieUrl } from '@/shared/utils/imdb';
 import { getYearFromDateString } from '@/shared/utils/formatting';
 import MovieTrailers from '../components/movie-trailers.vue';
-import MovieHeader from '../components/movie-header.vue';
 
 const route = useRoute();
-const router = useRouter();
 const movieId = route.params.movieId as string;
 const movie = ref<Movie>();
 fetchMovieDetails(movieId).then((response) => {

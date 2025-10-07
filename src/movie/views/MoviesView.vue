@@ -1,6 +1,6 @@
 <template>
   <div
-    style="display: flex; flex-direction: column; height: 100vh"
+    style="display: flex; flex-direction: column; height: 100%"
     id="infinite-scroll"
   >
     <MovieFilters
