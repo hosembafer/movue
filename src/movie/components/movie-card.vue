@@ -2,11 +2,14 @@
   <n-card
     class="card"
     :bordered="false"
+    header-style="padding: 16px; padding-bottom: 0;"
+    content-style="padding: 16px;"
+    footer-style="padding: 16px; padding-top: 0;"
   >
     <template #header>
       <RouterLink
         :to="`/movies/${movie.id}`"
-        style="color: inherit; text-decoration: none"
+        class="card__title"
       >
         {{ movie.title }}
       </RouterLink>
@@ -50,6 +53,18 @@ const { movie } = defineProps<{
   &:hover {
     margin-top: -10px;
   }
+}
+
+.card__title {
+  color: inherit;
+  text-decoration: none;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  white-space: normal;
 }
 
 .cover {

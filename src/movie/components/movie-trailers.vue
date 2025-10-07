@@ -11,7 +11,7 @@
         :key="video.id"
       >
         <iframe
-          style="aspect-ratio: 3 / 2; width: 100%; max-width: 100%"
+          style="aspect-ratio: 3 / 2; width: 100%; max-width: 100%; margin-bottom: 20px"
           :src="getYoutubeVideoUrl(video.key)"
           title="YouTube video player"
           frameborder="0"
@@ -19,7 +19,11 @@
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
         ></iframe>
-        <n-text>{{ video.name }} ({{ getYearFromDateString(video.published_at) }})</n-text>
+        <n-text
+          tag="div"
+          style="padding-bottom: 30px"
+          >{{ video.name }} ({{ getYearFromDateString(video.published_at) }})</n-text
+        >
       </n-carousel-item>
     </n-carousel>
   </div>
