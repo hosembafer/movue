@@ -1,25 +1,21 @@
 <template>
-  <div
-    style="display: flex; flex-direction: column; height: 100%"
-    id="infinite-scroll"
-  >
+  <div class="movies-view">
     <MovieFilters
       v-model:keyword="keyword"
       v-model:genreId="genreId"
       :genres="genres"
       @filters-changed="onFiltersChanged"
     />
-    <n-infinite-scroll
-      :distance="120"
-      v-on:load="loadMore"
-      style="height: 100%"
+    <InfiniteLoader
+      :load="loadMore"
+      :disabled="isLoading || !hasMore"
+      :threshold="250"
     >
       <MovieList
         :movies="data"
-        :onLoadMore="loadMore"
         :isLoading="isLoading"
       />
-    </n-infinite-scroll>
+    </InfiniteLoader>
   </div>
 </template>
 
@@ -32,6 +28,7 @@ import type { Movie } from '../movie.types';
 import { useMovieStore } from '../movie.store';
 import { storeToRefs } from 'pinia';
 import { moviesQueryCache } from '../movies.query-cache';
+import InfiniteLoader from '@/shared/components/infinite-loader.vue';
 
 const MOVIE_CACHE_TTL_MS = 60_000;
 
@@ -43,11 +40,15 @@ const genreId = ref<number>();
 
 const isLoading = ref(false);
 
-const onFiltersChanged = () => {
-  document.querySelector('#infinite-scroll .n-scrollbar-container')!.scrollTo({
+const scrollToTop = () => {
+  window.scrollTo({
     top: 0,
     behavior: 'smooth',
   });
+};
+
+const onFiltersChanged = () => {
+  scrollToTop();
   data.value = [];
   page.value = 0;
   hasMore.value = true;
@@ -84,7 +85,7 @@ const loadMore = async () => {
     const { results, total_pages } = await moviesQueryCache.process(key, MOVIE_CACHE_TTL_MS, getData);
     page.value = nextPage;
     data.value = [...data.value, ...results];
-    hasMore.value = total_pages > nextPage;
+    hasMore.value = results.length > 0 && total_pages > nextPage;
   } finally {
     isLoading.value = false;
   }
@@ -102,3 +103,12 @@ onMounted(() => {
   loadMore();
 });
 </script>
+
+<style scoped>
+.movies-view {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+</style>

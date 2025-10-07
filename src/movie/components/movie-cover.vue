@@ -1,8 +1,10 @@
 <template>
-  <img
-    :src="getImageUrl(movie.poster_path)"
-    class="cover"
-  />
+  <div style="padding: 16px; width: 100%; box-sizing: border-box">
+    <img
+      :src="getImageUrl(movie.poster_path)"
+      class="cover"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -19,6 +21,7 @@ const { movie } = defineProps<Props>();
 .cover {
   margin-top: 40px;
   max-width: 400px;
+  width: 100%;
   object-fit: cover;
   object-position: center center;
   aspect-ratio: 11 / 17;

@@ -28,7 +28,7 @@ mediaColorSchema.addEventListener('change', (event) => {
         />
       </n-layout-header>
       <n-layout-content class="app-layout__content">
-        <main class="app-content">
+        <main class="app-content page-container">
           <RouterView v-slot="{ Component, route }">
             <Transition
               name="route-slide"
@@ -70,7 +70,7 @@ mediaColorSchema.addEventListener('change', (event) => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 16px 0;
 }
 
 .route-slide-enter-active,

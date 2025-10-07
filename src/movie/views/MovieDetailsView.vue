@@ -1,40 +1,42 @@
 <template>
-  <template v-if="movie && credits && videos">
-    <n-flex
-      style="flex-direction: column; max-width: 600px; place-self: center"
-      :align="`center`"
-    >
-      <MovieCover
-        :movie="movie"
-        style="margin-bottom: 20px"
-      />
-      <MovieRating :rating="movie.vote_average / 2" />
-      <n-h1 style="text-align: center">{{ movie.title }} ({{ getYearFromDateString(movie.release_date) }})</n-h1>
-      <MovieTags :movie="movie" />
-      <MovieFavoriteToggler :movie-id="movieId" />
+  <div style="max-width: 100%">
+    <template v-if="movie && credits && videos">
+      <n-flex
+        style="flex-direction: column; max-width: 600px; width: 100%; place-self: center"
+        :align="`center`"
+      >
+        <MovieCover
+          :movie="movie"
+          style="margin-bottom: 20px"
+        />
+        <MovieRating :rating="movie.vote_average / 2" />
+        <n-h1 style="text-align: center">{{ movie.title }} ({{ getYearFromDateString(movie.release_date) }})</n-h1>
+        <MovieTags :movie="movie" />
+        <MovieFavoriteToggler :movie-id="movieId" />
 
-      <div style="padding: 20px">
-        <n-text>
-          {{ movie.overview }}
-        </n-text>
-      </div>
+        <div style="padding: 20px">
+          <n-text>
+            {{ movie.overview }}
+          </n-text>
+        </div>
 
-      <ActionButton
-        text="Open in IMDb"
-        :link="getImdbMovieUrl(movie.imdb_id)"
-        style="margin-bottom: 20px"
-      />
+        <ActionButton
+          text="Open in IMDb"
+          :link="getImdbMovieUrl(movie.imdb_id)"
+          style="margin-bottom: 20px"
+        />
 
-      <n-h2>Trailers</n-h2>
-      <MovieTrailers :videos="videos" />
+        <n-h2>Trailers</n-h2>
+        <MovieTrailers :videos="videos" />
 
-      <n-h2>Cast</n-h2>
-      <MovieCast :credits="credits" />
-    </n-flex>
-  </template>
-  <template v-else>
-    <MovieDetailsSkeleton />
-  </template>
+        <n-h2>Cast</n-h2>
+        <MovieCast :credits="credits" />
+      </n-flex>
+    </template>
+    <template v-else>
+      <MovieDetailsSkeleton />
+    </template>
+  </div>
 </template>
 
 <script lang="ts" setup>

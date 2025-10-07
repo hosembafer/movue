@@ -1,0 +1,11 @@
+:root {
+  --page-max-width: 1000px;
+}
+
+.page-container {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}

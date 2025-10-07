@@ -15,7 +15,7 @@
   </n-grid>
   <div
     v-if="isLoading"
-    class="text"
+    class="movie-list__loading text"
   >
     Loading...
   </div>
@@ -25,9 +25,16 @@
 import type { Movie } from '../movie.types';
 import MovieCard from './movie-card.vue';
 
-const { movies } = defineProps<{
+defineProps<{
   movies: Movie[];
-  onLoadMore: VoidFunction;
   isLoading: boolean;
 }>();
 </script>
+
+<style scoped>
+.movie-list__loading {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 20px;
+}
+</style>
