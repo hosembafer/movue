@@ -33,14 +33,7 @@
     </n-flex>
   </template>
   <template v-else>
-    <n-skeleton
-      text
-      :repeat="2"
-    />
-    <n-skeleton
-      text
-      style="width: 60%"
-    />
+    <MovieDetailsSkeleton />
   </template>
 </template>
 
@@ -58,6 +51,7 @@ import { getImdbMovieUrl } from '@/shared/utils/imdb';
 import { getYearFromDateString } from '@/shared/utils/formatting';
 import MovieTrailers from '../components/movie-trailers.vue';
 import MovieFavoriteToggler from '../components/movie-favorite-toggler.vue';
+import MovieDetailsSkeleton from '../components/movie-details-skeleton.vue';
 
 const route = useRoute();
 const movieId = route.params.movieId as string;
