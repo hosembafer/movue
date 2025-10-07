@@ -30,8 +30,6 @@ import { storeToRefs } from 'pinia';
 import { moviesQueryCache } from '../movies.query-cache';
 import InfiniteLoader from '@/shared/components/infinite-loader.vue';
 
-const MOVIE_CACHE_TTL_MS = 60_000;
-
 const data = ref<Movie[]>([]);
 const page = ref(0);
 const hasMore = ref(true);
@@ -82,7 +80,7 @@ const loadMore = async () => {
   };
 
   try {
-    const { results, total_pages } = await moviesQueryCache.process(key, MOVIE_CACHE_TTL_MS, getData);
+    const { results, total_pages } = await moviesQueryCache.process(key, getData);
     page.value = nextPage;
     data.value = [...data.value, ...results];
     hasMore.value = results.length > 0 && total_pages > nextPage;

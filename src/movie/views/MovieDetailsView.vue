@@ -54,21 +54,28 @@ import { getYearFromDateString } from '@/shared/utils/formatting';
 import MovieTrailers from '../components/movie-trailers.vue';
 import MovieFavoriteToggler from '../components/movie-favorite-toggler.vue';
 import MovieDetailsSkeleton from '../components/movie-details-skeleton.vue';
+import { movieByIdQueryCache, movieCreditsByIdQueryCache, movieVideosByIdQueryCache } from '../movies.query-cache';
 
 const route = useRoute();
 const movieId = route.params.movieId as string;
 const movie = ref<Movie>();
-fetchMovieDetails(movieId).then((response) => {
-  movie.value = response;
-});
+movieByIdQueryCache
+  .process(movieId, () => fetchMovieDetails(movieId))
+  .then((response) => {
+    movie.value = response;
+  });
 
 const credits = ref<MovieCredits>();
-fetchMovieCredits(movieId).then((response) => {
-  credits.value = response;
-});
+movieCreditsByIdQueryCache
+  .process(movieId, () => fetchMovieCredits(movieId))
+  .then((response) => {
+    credits.value = response;
+  });
 
 const videos = ref<MovieVideo[]>();
-fetchMovieVideos(movieId).then(({ results }) => {
-  videos.value = results;
-});
+movieVideosByIdQueryCache
+  .process(movieId, () => fetchMovieVideos(movieId))
+  .then(({ results }) => {
+    videos.value = results;
+  });
 </script>
